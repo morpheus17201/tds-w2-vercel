@@ -14,12 +14,16 @@ class handler(BaseHTTPRequestHandler):
         with open('q-vercel-python.json', 'r') as f:
             input_json = f.read() 
             # Transform json input to python objects
-            input_dict = json.loads(input_json)
-            self.wfile.write(str(input_dict).encode('utf-8'))
-            # Filter python objects with list comprehensions
-            output_dict = [x for x in input_dict if x['name'].isin(parsed)]
-            
-            # Transform python object back into json
-            output_json = json.dumps(output_dict)
-            self.wfile.write(str(output_json).encode('utf-8'))
+        input_dict = json.loads(input_json)
+
+        print(f"{input_data=}")
+        output_list = []
+        for name in parsed['name']:
+            for ele in input_data:
+                if ele['name'] == name:
+                    output_list.append(str(ele['marks']))
+ 
+
+        output_json = '{ "marks": [' +', '.join(output_list) + " ] }"
+        self.wfile.write(str(output_json).encode('utf-8'))
         return
