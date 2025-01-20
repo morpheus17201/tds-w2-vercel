@@ -23,6 +23,6 @@ class handler(BaseHTTPRequestHandler):
                     output_list.append(str(ele['marks']))
  
 
-        output_json = '{ "marks": [' +', '.join(output_list) + " ] }"
+        output_json = '{ "marks": [' +', '.join(output_list) + "] }"
         self.wfile.write(str(output_json).encode('utf-8'))
         return
