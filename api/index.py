@@ -14,9 +14,8 @@ class handler(BaseHTTPRequestHandler):
         with open('q-vercel-python.json', 'r') as f:
             input_json = f.read() 
             # Transform json input to python objects
-        input_dict = json.loads(input_json)
-
-        print(f"{input_data=}")
+        input_data = json.loads(input_json)
+      
         output_list = []
         for name in parsed['name']:
             for ele in input_data:
