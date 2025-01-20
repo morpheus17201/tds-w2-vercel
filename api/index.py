@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
+import json
 
 class handler(BaseHTTPRequestHandler):
 
@@ -11,6 +12,14 @@ class handler(BaseHTTPRequestHandler):
         parsed = parse_qs(urlparse(url).query)
 
         with open('q-vercel-python.json', 'r') as f:
-            for line in f:
-                self.wfile.write(str(parsed).encode('utf-8'))
+            input_json = f.read() 
+            # Transform json input to python objects
+            input_dict = json.loads(input_json)
+            
+            # Filter python objects with list comprehensions
+            output_dict = [x for x in input_dict if x['name'].isin(parsed)]
+            
+            # Transform python object back into json
+            output_json = json.dumps(output_dict)
+            self.wfile.write(str(output_json).encode('utf-8'))
         return
