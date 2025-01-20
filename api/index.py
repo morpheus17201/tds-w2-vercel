@@ -15,7 +15,7 @@ class handler(BaseHTTPRequestHandler):
             input_json = f.read() 
             # Transform json input to python objects
             input_dict = json.loads(input_json)
-            
+            self.wfile.write(str(input_dict).encode('utf-8'))
             # Filter python objects with list comprehensions
             output_dict = [x for x in input_dict if x['name'].isin(parsed)]
             
